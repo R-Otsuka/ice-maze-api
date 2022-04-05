@@ -1,0 +1,36 @@
+version: "3"
+services:
+  app:
+    # 起動するイメージを指定（ここではNode.js v12の公式イメージ）
+    image: node:14
+    # 冷静に、dockerFileでapt なんちゃらとかやらんと破壊のたびに環境整えることになりそう。
+
+    # 環境変数を設定
+    # environment:
+    #   - DEBUG=app:*
+
+    # ホスト側のポート:コンテナのポート
+    ports:
+      - "3000:3000"
+
+    # ソースコードを格納するフォルダをマウント
+    #（ホスト側の./srcをコンテナの/appにマウント）
+    volumes:
+      - .:/redux-api
+      - node_modules:/redux-api/node_modules
+
+    # 起動時のカレントフォルダを指定
+    working_dir: /api rootがいい
+
+    # 起動後に実行するコマンドを指定
+    command: npm start
+  db:
+    image: mysql:5.7.11
+    # command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_bin
+    environment:
+      MYSQL_DATABASE: "redux-api"
+      MYSQL_ROOT_PASSWORD: "root"
+    ports:
+      - "3306:3306"
+volumes:
+  node_modules:
