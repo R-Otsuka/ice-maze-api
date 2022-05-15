@@ -2,9 +2,11 @@ version: "3"
 services:
   app:
     # 起動するイメージを指定（ここではNode.js v12の公式イメージ）
-    image: node:14
+    build:
+      context: .
+      dockerfile: Dockerfile
     # 冷静に、dockerFileでapt なんちゃらとかやらんと破壊のたびに環境整えることになりそう。
-
+    # puppeterのせい、コンテナの中でyarn install
     # 環境変数を設定
     # environment:
     #   - DEBUG=app:*
@@ -13,17 +15,18 @@ services:
     ports:
       - "3000:3000"
 
+    tty: true
+
     # ソースコードを格納するフォルダをマウント
-    #（ホスト側の./srcをコンテナの/appにマウント）
     volumes:
       - .:/redux-api
       - node_modules:/redux-api/node_modules
 
     # 起動時のカレントフォルダを指定
-    working_dir: /api rootがいい
+    working_dir: "/redux-api"
 
     # 起動後に実行するコマンドを指定
-    command: npm start
+    command: npm run start
   db:
     image: mysql:5.7.11
     # command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_bin
