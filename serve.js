@@ -18,8 +18,9 @@ app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
 
-app.get('/api/ice', (req, res) => {
+app.get('/ice', (req, res) => {
   // ここに氷の迷路アルゴリズムを作る。
+  console.log("北");
   res.json({num :1002});;
 })
 
