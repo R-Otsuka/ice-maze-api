@@ -2,7 +2,7 @@ const express = require('express')
 const app = express()
 const cors = require('cors');
 const router = express.Router();
-const port = 3002
+const port = 3000
 
 app.use(cors({
   origin: 'http://localhost:8080', //アクセス許可するオリジン
