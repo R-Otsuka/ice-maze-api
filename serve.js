@@ -2,7 +2,7 @@ const express = require('express')
 const app = express()
 const cors = require('cors');
 const router = express.Router();
-const port = 3000
+const port = 3001
 
 app.use(cors({
   origin: 'http://localhost:8080', //アクセス許可するオリジン
@@ -20,7 +20,7 @@ app.listen(port, () => {
 
 app.get('/ice', (req, res) => {
   // ここに氷の迷路アルゴリズムを作る。
-  console.log("北");
+  
   res.json({num :1002});;
 })
 
