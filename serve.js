@@ -1,8 +1,9 @@
 const express = require('express')
-const app = express()
+const app = express();
 const cors = require('cors');
 const router = express.Router();
 const port = 3001
+const _ = require('lodash');
 
 app.use(cors({
   origin: 'http://localhost:8080', //アクセス許可するオリジン
@@ -20,7 +21,12 @@ app.listen(port, () => {
 
 app.get('/floor', (req, res) => {
   // ここに氷の迷路アルゴリズムを作る。
-  res.json({ num: 1002 });;
+  const floorLength = 10;
+  const map = _.map(new Array(floorLength), (index) => {
+    return _.map(new Array(floorLength), (val) => Math.round(Math.random()));
+  });
+  console.log(map);
+  res.json(map);
 });
 
 app.use(router);
