@@ -4,12 +4,14 @@ const cors = require('cors');
 const router = express.Router();
 const port = 3001
 const _ = require('lodash');
+const { Floor } = require('./lib/service/floor');
 
 app.use(cors({
   origin: 'http://localhost:8080', //アクセス許可するオリジン
   credentials: true, //レスポンスヘッダーにAccess-Control-Allow-Credentials追加
   optionsSuccessStatus: 200 //レスポンスstatusを200に設定
 }));
+
 app.get('/', (req, res) => {
   console.log("hello world");
   res.send('Hello World!');
@@ -27,7 +29,6 @@ app.get('/floor', (req, res) => {
   // 可変にする
   const start = { x: 1, y: 0 };
   const goal = { x: 20, y: 21 };
-  const score = 0;
   const map = _.map(new Array(FLOOR_LENGTH + 2), (val, y) => {
     if (y === 0 || y === FLOOR_LENGTH + 1) {
       return _.map(new Array(FLOOR_LENGTH + 2), (_val, x) => {
@@ -41,10 +42,13 @@ app.get('/floor', (req, res) => {
       if ((start.x === x && start.y === y) || (goal.x === x && goal.y === y)) {
         return 1;
       }
-      return Math.round(Math.random()) + 1;
+      if (x === 0 || x === FLOOR_LENGTH + 1) {
+        return 0;
+      }
+      return Math.round(Math.random() - 0.4) + 1;
     });
   });
-  res.json({ map, start, goal, stone: STONE_COUNT, length: FLOOR_LENGTH, score });
+  res.json({ map, start, goal, stone: STONE_COUNT, length: FLOOR_LENGTH, score: Floor.calculateScore(map, start, goal) });
 });
 
 app.use(router);
