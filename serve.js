@@ -29,26 +29,16 @@ app.get('/floor', (req, res) => {
   // 可変にする
   const start = { x: 1, y: 0 };
   const goal = { x: 20, y: 21 };
-  const map = _.map(new Array(FLOOR_LENGTH + 2), (val, y) => {
-    if (y === 0 || y === FLOOR_LENGTH + 1) {
-      return _.map(new Array(FLOOR_LENGTH + 2), (_val, x) => {
-        if ((start.x === x && start.y === y) || (goal.x === x && goal.y === y)) {
-          return 1;
-        }
-        return 0;
-      });
-    }
-    return _.map(new Array(FLOOR_LENGTH + 2), (_val, x) => {
-      if ((start.x === x && start.y === y) || (goal.x === x && goal.y === y)) {
-        return 1;
-      }
-      if (x === 0 || x === FLOOR_LENGTH + 1) {
-        return 0;
-      }
-      return Math.round(Math.random() - 0.4) + 1;
-    });
-  });
-  res.json({ map, start, goal, stone: STONE_COUNT, length: FLOOR_LENGTH, score: Floor.calculateScore(map, start, goal) });
+  let map = [];
+  let score = 0;
+  let minSteps = 0;
+  while (score === 0) {
+    map = Floor.createRandomMap(start, goal, FLOOR_LENGTH, STONE_COUNT);
+    const { min_steps, status_count } = Floor.calculateScore(map, start, goal);
+    score = min_steps * status_count;
+    minSteps = min_steps;
+  }
+  res.json({ map, start, goal, stone: STONE_COUNT, length: FLOOR_LENGTH, score, min_steps: minSteps });
 });
 
 app.use(router);
