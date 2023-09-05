@@ -1,0 +1,34 @@
+{
+  "npm.packageManager": "yarn",
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  /*
+   * JavaScript
+   */
+  "[javascript]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+  },
+  "[javascriptreact]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+  },
+  /*
+   * CSS/SCSS
+   */
+  "scss.validate": false, // VSCodeデフォルトのリンターを無効化
+  "css.validate": false, // VSCodeデフォルトのリンターを無効化
+  "stylelint.validate": [
+    "css",
+    "scss"
+  ],
+  "[scss]": {
+    "editor.codeActionsOnSave": {
+      "source.fixAll": true
+    },
+  },
+  "cSpell.words": [
+    "clsx",
+    "Shirofune"
+  ],
+}
