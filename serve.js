@@ -11,10 +11,6 @@ const router = express.Router();
 const iceMazeRouter = require('./routes/ice_maze.js');
 const errorRouter = require('./routes/error.js');
 
-app.use('/ice_maze', iceMazeRouter);
-// 必ずルーティングの最後に記載する。
-app.use('/', errorRouter);
-
 app.use(cors({
   origin: 'http://localhost:8080', //アクセス許可するオリジン
   credentials: true, //レスポンスヘッダーにAccess-Control-Allow-Credentials追加
@@ -24,5 +20,10 @@ app.use(cors({
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 });
+
+app.use('/ice_maze', iceMazeRouter);
+// 必ずルーティングの最後に記載する。
+app.use('/', errorRouter);
+
 
 app.use(router);
